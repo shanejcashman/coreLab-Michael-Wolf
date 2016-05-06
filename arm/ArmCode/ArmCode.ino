@@ -1,35 +1,23 @@
 #include <Servo.h>
 
-Servo armServo;
-Servo baseServo;
-
-int aControl = 95;
-int bControl = 95;
+Servo jawServo;
 
 void setup() {
-  armServo.attach(9);
-  baseServo.attach(10);
+  jawServo.attach(9);
   Serial.begin(9600);
 }
 
 void loop() {
-  aControl = analogRead(A0);
-  bControl = analogRead(A1);
+  int bendRead1 = analogRead(A0);
+  int control;
   
-  aControl = map(aControl, 0, 1023, 60, 120);
-  bControl = map(bControl, 0, 1023, 60, 120);
-
-  Serial.println(aControl);
-  Serial.println(bControl);
-
-  if (aControl < 99 && aControl > 91) {
-    aControl == 95;
-  } else {
-    armServo.write(aControl);
-  }
-  if (bControl < 99 && aControl > 91) {
-    bControl == 95;
-  } else {
-    baseServo.write(bControl);
-  }
+  control = bendRead(bendRead1);
 }
+
+int bendRead(int sensorRead){
+  int jControl;
+  jControl = map(sensorRead, 0, 1023, 45, 175);
+  Serial.println(jControl);
+  jawServo.write(jControl);
+}
+
